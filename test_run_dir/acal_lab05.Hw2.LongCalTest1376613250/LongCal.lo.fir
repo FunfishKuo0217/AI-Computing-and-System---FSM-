@@ -1,0 +1,97 @@
+circuit LongCal :
+  module LongCal :
+    input clock : Clock
+    input reset : UInt<1>
+    input io_key_in : UInt<4>
+    output io_value_valid : UInt<1>
+    output io_value_bits : UInt<32>
+
+    node _T = geq(io_key_in, UInt<4>("ha")) @[LongCal.scala 15:27]
+    node _T_1 = leq(io_key_in, UInt<4>("hc")) @[LongCal.scala 15:48]
+    node _T_2 = and(_T, _T_1) @[LongCal.scala 15:35]
+    node _T_3 = lt(io_key_in, UInt<4>("ha")) @[LongCal.scala 18:22]
+    node _T_4 = eq(io_key_in, UInt<4>("hf")) @[LongCal.scala 21:24]
+    node _T_5 = eq(io_key_in, UInt<4>("hd")) @[LongCal.scala 24:22]
+    reg in_buffer : UInt<4>, clock with :
+      reset => (UInt<1>("h0"), in_buffer) @[LongCal.scala 27:28]
+    reg src1 : UInt<32>, clock with :
+      reset => (UInt<1>("h0"), src1) @[LongCal.scala 28:23]
+    reg op : UInt<2>, clock with :
+      reset => (UInt<1>("h0"), op) @[LongCal.scala 29:21]
+    reg src2 : UInt<32>, clock with :
+      reset => (UInt<1>("h0"), src2) @[LongCal.scala 30:23]
+    reg ans : UInt<32>, clock with :
+      reset => (UInt<1>("h0"), ans) @[LongCal.scala 31:22]
+    reg state : UInt<3>, clock with :
+      reset => (UInt<1>("h0"), state) @[LongCal.scala 37:24]
+    node _T_6 = eq(UInt<3>("h0"), state) @[Conditional.scala 37:30]
+    node neg = _T_5
+    node _GEN_0 = mux(neg, UInt<3>("h5"), UInt<3>("h1")) @[LongCal.scala 42:22 LongCal.scala 43:23 LongCal.scala 44:31]
+    node _T_7 = eq(UInt<3>("h1"), state) @[Conditional.scala 37:30]
+    node equal = _T_4
+    node _GEN_1 = mux(equal, UInt<3>("h4"), state) @[LongCal.scala 47:25 LongCal.scala 47:32 LongCal.scala 37:24]
+    node operator = _T_2
+    node _GEN_2 = mux(operator, UInt<3>("h2"), _GEN_1) @[LongCal.scala 48:28 LongCal.scala 48:35]
+    node _T_8 = eq(UInt<3>("h5"), state) @[Conditional.scala 37:30]
+    node _T_9 = eq(UInt<3>("h2"), state) @[Conditional.scala 37:30]
+    node _GEN_3 = mux(neg, UInt<3>("h6"), UInt<3>("h3")) @[LongCal.scala 55:22 LongCal.scala 56:23 LongCal.scala 57:31]
+    node _T_10 = eq(UInt<3>("h3"), state) @[Conditional.scala 37:30]
+    node _GEN_4 = mux(operator, UInt<3>("h2"), state) @[LongCal.scala 60:27 LongCal.scala 60:34 LongCal.scala 37:24]
+    node _GEN_5 = mux(equal, UInt<3>("h4"), _GEN_4) @[LongCal.scala 61:25 LongCal.scala 61:32]
+    node _T_11 = eq(UInt<3>("h6"), state) @[Conditional.scala 37:30]
+    node _T_12 = eq(UInt<3>("h4"), state) @[Conditional.scala 37:30]
+    node _GEN_6 = mux(_T_12, _GEN_0, state) @[Conditional.scala 39:67 LongCal.scala 37:24]
+    node _GEN_7 = mux(_T_11, _GEN_5, _GEN_6) @[Conditional.scala 39:67]
+    node _GEN_8 = mux(_T_10, _GEN_5, _GEN_7) @[Conditional.scala 39:67]
+    node _GEN_9 = mux(_T_9, _GEN_3, _GEN_8) @[Conditional.scala 39:67]
+    node _GEN_10 = mux(_T_8, _GEN_2, _GEN_9) @[Conditional.scala 39:67]
+    node _GEN_11 = mux(_T_7, _GEN_2, _GEN_10) @[Conditional.scala 39:67]
+    node _GEN_12 = mux(_T_6, _GEN_0, _GEN_11) @[Conditional.scala 40:58]
+    node _T_13 = eq(state, UInt<3>("h1")) @[LongCal.scala 75:16]
+    node _GEN_13 = mux(_T_13, UInt<2>("h3"), src1) @[LongCal.scala 75:26 LongCal.scala 77:14 LongCal.scala 28:23]
+    node _T_14 = eq(state, UInt<3>("h5")) @[LongCal.scala 79:16]
+    node _T_15 = neq(in_buffer, UInt<4>("hd")) @[LongCal.scala 80:25]
+    node _T_16 = neq(in_buffer, UInt<4>("hb")) @[LongCal.scala 80:49]
+    node _T_17 = and(_T_15, _T_16) @[LongCal.scala 80:35]
+    node _T_18 = neq(in_buffer, UInt<4>("he")) @[LongCal.scala 80:73]
+    node _T_19 = and(_T_17, _T_18) @[LongCal.scala 80:59]
+    node _GEN_14 = mux(_T_19, UInt<1>("h1"), _GEN_13) @[LongCal.scala 80:83 LongCal.scala 82:18]
+    node _GEN_15 = mux(_T_14, _GEN_14, _GEN_13) @[LongCal.scala 79:29]
+    node _T_20 = eq(state, UInt<3>("h3")) @[LongCal.scala 86:16]
+    node _GEN_16 = mux(_T_20, UInt<3>("h4"), src2) @[LongCal.scala 86:26 LongCal.scala 88:14 LongCal.scala 30:23]
+    node _T_21 = eq(state, UInt<3>("h6")) @[LongCal.scala 90:16]
+    node _T_22 = neq(in_buffer, UInt<4>("hd")) @[LongCal.scala 91:25]
+    node _T_23 = neq(in_buffer, UInt<4>("hb")) @[LongCal.scala 91:49]
+    node _T_24 = and(_T_22, _T_23) @[LongCal.scala 91:35]
+    node _T_25 = neq(in_buffer, UInt<4>("he")) @[LongCal.scala 91:73]
+    node _T_26 = and(_T_24, _T_25) @[LongCal.scala 91:59]
+    node _GEN_17 = mux(_T_26, UInt<2>("h2"), _GEN_16) @[LongCal.scala 91:83 LongCal.scala 93:18]
+    node _GEN_18 = mux(_T_21, _GEN_17, _GEN_16) @[LongCal.scala 90:29]
+    node _T_27 = eq(state, UInt<3>("h2")) @[LongCal.scala 96:16]
+    node _T_28 = sub(in_buffer, UInt<4>("ha")) @[LongCal.scala 97:25]
+    node _T_29 = tail(_T_28, 1) @[LongCal.scala 97:25]
+    node _GEN_19 = mux(_T_27, _T_29, op) @[LongCal.scala 96:24 LongCal.scala 97:12 LongCal.scala 29:21]
+    node _T_30 = eq(state, UInt<3>("h4")) @[LongCal.scala 100:16]
+    node _GEN_20 = mux(_T_30, UInt<1>("h0"), _GEN_15) @[LongCal.scala 100:27 LongCal.scala 101:14]
+    node _GEN_21 = mux(_T_30, UInt<1>("h0"), _GEN_18) @[LongCal.scala 100:27 LongCal.scala 102:14]
+    node _GEN_22 = mux(_T_30, UInt<1>("h0"), _GEN_19) @[LongCal.scala 100:27 LongCal.scala 103:12]
+    node _GEN_23 = mux(_T_30, UInt<1>("h0"), io_key_in) @[LongCal.scala 100:27 LongCal.scala 104:19 LongCal.scala 27:28]
+    node _T_31 = eq(state, UInt<3>("h4")) @[LongCal.scala 107:33]
+    node _T_32 = mux(_T_31, UInt<1>("h1"), UInt<1>("h0")) @[LongCal.scala 107:26]
+    node _T_33 = add(src1, src2) @[LongCal.scala 109:22]
+    node _T_34 = tail(_T_33, 1) @[LongCal.scala 109:22]
+    node _T_35 = sub(src1, src2) @[LongCal.scala 110:22]
+    node _T_36 = tail(_T_35, 1) @[LongCal.scala 110:22]
+    node _T_37 = eq(UInt<1>("h0"), op) @[Mux.scala 80:60]
+    node _T_38 = mux(_T_37, _T_34, UInt<1>("h0")) @[Mux.scala 80:57]
+    node _T_39 = eq(UInt<1>("h1"), op) @[Mux.scala 80:60]
+    node _T_40 = mux(_T_39, _T_36, _T_38) @[Mux.scala 80:57]
+    node num = _T_3
+    io_value_valid <= _T_32 @[LongCal.scala 107:20]
+    io_value_bits <= _T_40 @[LongCal.scala 108:19]
+    in_buffer <= _GEN_23
+    src1 <= mux(reset, UInt<32>("h0"), _GEN_20) @[LongCal.scala 28:23 LongCal.scala 28:23]
+    op <= mux(reset, UInt<2>("h0"), bits(_GEN_22, 1, 0)) @[LongCal.scala 29:21 LongCal.scala 29:21]
+    src2 <= mux(reset, UInt<32>("h0"), _GEN_21) @[LongCal.scala 30:23 LongCal.scala 30:23]
+    ans <= mux(reset, UInt<32>("h0"), ans) @[LongCal.scala 31:22 LongCal.scala 31:22 LongCal.scala 31:22]
+    state <= mux(reset, UInt<3>("h0"), _GEN_12) @[LongCal.scala 37:24 LongCal.scala 37:24]

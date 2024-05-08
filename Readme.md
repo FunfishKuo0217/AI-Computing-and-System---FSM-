@@ -1,4 +1,4 @@
-(NTHU_111065531_郭芳妤)  ACAL 2024 Spring Lab 5 HW Submission
+ ACAL 2024 Spring Lab 5 FSM
 ===
 
 ## Hw5-1 TrafficLight with Pedestrian button

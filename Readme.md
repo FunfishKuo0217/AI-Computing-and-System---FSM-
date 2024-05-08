@@ -1,12 +1,6 @@
 (NTHU_111065531_郭芳妤)  ACAL 2024 Spring Lab 5 HW Submission
 ===
 
-[toc]
-
-## Gitlab code link
-
-- Gitlab link - https://course.playlab.tw/git/funfish111065531/lab05
-
 ## Hw5-1 TrafficLight with Pedestrian button
 ### Scala Code
 ```scala=
